@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
+import { Input, Segment } from 'semantic-ui-react';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -26,21 +28,22 @@ class App extends React.Component {
     });
   }
 
-  handleScroll() {
-    this.getData(this.state.currentValue)
-
-  }
 
   componentDidMount() {
-    document.addEventListener('scroll', this.handleScroll.bind(this));
+
   }
 
   render () {
-    return (<div>
-      <button onClick={this.handleScroll.bind(this)}>Add Items</button>
+    return (
+    <div>
+      <Segment style={{backgroundColor:'#2C688F'}} >
+        <Input fluid placeholder='Search for Restaurants by Name, Cuisine, Location' />
+      </Segment>
+      <button>Add Items</button>
       <h1>Item List</h1>
       <List items={this.state.items}/>
-    </div>)
+    </div>
+    )
   }
 }
 

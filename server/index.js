@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 let axios = require('axios');
+let algoliasearch = require('algoliasearch');
 
 var items = require('../database-mysql');
 
@@ -18,57 +19,9 @@ app.get('/items', function (req, res) {
   });
 });
 
-app.listen(3000, function() {
-  console.log('listening on port 3000!');
+var client = algoliasearch('E8CLMTQDE6', '29a46142a1236fa5e7289934f92a3412');
+var index = client.initIndex('algolia');
+console.log(index)
+app.listen(8080, function() {
+  console.log('listening on port 8080!');
 });
-
-
-function requestChallenge(){
-  axios.get('https://letsrevolutionizetesting.com/challenge.json').then(response => {
-    let newUrl = response.data.follow.replace('challenge?', 'challenge.json?')
-    axios.get(newUrl).then(response => {
-        console.log(response.data)
-      }
-    )
-    
-  })
-
-}
-
-requestChallenge();
-// const request = require('request');
-
-// const INIT_URL = 'http://letsrevolutionizetesting.com/challenge.json';
-
-// function requestChallenge(url) {
-//   return new Promise((resolve, reject) => {
-//     request.get(url, { json: true }, (error, response, body) => {
-//       if (error) {
-//         reject(error);
-//       } else {
-//         resolve(body);
-//       }
-//     });
-//   });
-// }
-
-// function followChallenge(url = INIT_URL) {
-//   return requestChallenge(url)
-//   .then((challenge) => {
-//     if (Object.prototype.hasOwnProperty.call(challenge, 'follow')) {
-//       return followChallenge(challenge.follow.replace('challenge?', 'challenge.json?'));
-//     }
-
-//     return challenge;
-//   });
-// }
-
-// followChallenge()
-// .then((result) => {
-//   console.log('final result is', result);
-//   process.exit(0);
-// })
-// .catch((err) => {
-//   console.error('oops an error', err);
-//   process.exit(0);
-// });
